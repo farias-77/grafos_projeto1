@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
-#include "Grafo.h"
-#include "No.h"
+#include "./Grafo.h"
+#include "./No.h"
 
 using namespace std;
 
@@ -21,7 +21,7 @@ Grafo::~Grafo(){
 
 void Grafo::imprimeGrafo(){
 
-    //exibe o nó e suas arestas no terminal
+    //exibe o nï¿½ e suas arestas no terminal
     for(No *p = primeiroNo; p != NULL; p = p->getProxNo()){
         cout << p->getIdNo();
         if(p->getPrimeiraAresta() != NULL){
@@ -33,30 +33,30 @@ void Grafo::imprimeGrafo(){
 
 void Grafo::insereNo(int id){
 
-    //impede inserção de nós duplicados
+    //impede inserï¿½ï¿½o de nï¿½s duplicados
     if(verificaExistenciaNo(id)){
         return;
     }
 
-    //inicializa nó
+    //inicializa nï¿½
     No *p = new No();
     p->setIdNo(id);
     p->setProxNo(NULL);
 
     if(primeiroNo != NULL){
-        No *q = primeiroNo;                 //navega até o último nó para inserir o novo
+        No *q = primeiroNo;                 //navega atï¿½ o ï¿½ltimo nï¿½ para inserir o novo
         while(q->getProxNo() != NULL)
             q = q->getProxNo();
 
         q->setProxNo(p);
     }else{
-        primeiroNo = p;                     //insere como primeiro no caso de o grafo não ter nós
+        primeiroNo = p;                     //insere como primeiro no caso de o grafo nï¿½o ter nï¿½s
     }
 }
 
 void Grafo::insereArestaGrafo(int idOrigem, int idDestino, int pesoAresta){
 
-    //verifica se os nós necessários existem
+    //verifica se os nï¿½s necessï¿½rios existem
     if(!verificaExistenciaNo(idOrigem)){
         insereNo(idOrigem);
     }
@@ -68,10 +68,10 @@ void Grafo::insereArestaGrafo(int idOrigem, int idDestino, int pesoAresta){
     for(No *p = primeiroNo; p != NULL; p = p->getProxNo()){
 
         if(p->getIdNo() == idOrigem){
-            p->insereArestaNo(idDestino, pesoAresta);           //insere a aresta como destino do nó de origem
+            p->insereArestaNo(idDestino, pesoAresta);           //insere a aresta como destino do nï¿½ de origem
         }
 
-        if(getGrafoDirecionado() == 0){                         //se o grafo não for direcionado, insere a aresta no sentido oposto
+        if(getGrafoDirecionado() == 0){                         //se o grafo nï¿½o for direcionado, insere a aresta no sentido oposto
             if(p->getIdNo() == idDestino){
                 p->insereArestaNo(idOrigem, pesoAresta);
             }
@@ -83,10 +83,10 @@ bool Grafo::verificaExistenciaNo(int id){
 
     for(No *p = primeiroNo; p != NULL; p = p->getProxNo()){
         if(p->getIdNo() == id){
-            return true;            //true se encontrar o nó no grafo
+            return true;            //true se encontrar o nï¿½ no grafo
         }
     }
-    return false;                   //false se o nó não existir no grafo
+    return false;                   //false se o nï¿½ nï¿½o existir no grafo
 }
 
 

@@ -1,4 +1,4 @@
-#include "No.h"
+#include "./No.h"
 #include <iostream>
 
 using namespace std;
@@ -34,12 +34,12 @@ void No::insereArestaNo(int destino, int pesoAresta){
 
     if(primeiraAresta != NULL){
         Aresta *q = primeiraAresta;
-        while(q->getProxAresta() != NULL)       //navega até a última aresta para inserir a nova
+        while(q->getProxAresta() != NULL)       //navega atï¿½ a ï¿½ltima aresta para inserir a nova
             q = q->getProxAresta();
 
         q->setProxAresta(p);
     }else{
-        primeiraAresta = p;                     //insere como primeira no caso de o nó não possuir arestas
+        primeiraAresta = p;                     //insere como primeira no caso de o nï¿½ nï¿½o possuir arestas
     }
 }
 

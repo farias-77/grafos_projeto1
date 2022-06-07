@@ -1,6 +1,6 @@
 #ifndef GRAFO_H_INCLUDED
 #define GRAFO_H_INCLUDED
-#include "No.h"
+#include "./No.h"
 #include <iostream>
 #include <string>
 
