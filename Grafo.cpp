@@ -1,9 +1,6 @@
 #include <iostream>
 #include <string>
-#include "./Grafo.h"
-#include "./No.h"
-
-using namespace std;
+#include "Grafo.h"
 
 Grafo::Grafo(){
     primeiroNo = NULL;
@@ -21,42 +18,42 @@ Grafo::~Grafo(){
 
 void Grafo::imprimeGrafo(){
 
-    //exibe o n� e suas arestas no terminal
+    //exibe o no e suas arestas no terminal
     for(No *p = primeiroNo; p != NULL; p = p->getProxNo()){
-        cout << p->getIdNo();
+        std::cout << p->getIdNo();
         if(p->getPrimeiraAresta() != NULL){
             p->imprimeArestas();
         }
-        cout << "\n";
+        std::cout << "\n";
     }
 }
 
 void Grafo::insereNo(int id){
 
-    //impede inser��o de n�s duplicados
+    //impede insercao de nos duplicados
     if(verificaExistenciaNo(id)){
         return;
     }
 
-    //inicializa n�
+    //inicializa no
     No *p = new No();
     p->setIdNo(id);
     p->setProxNo(NULL);
 
     if(primeiroNo != NULL){
-        No *q = primeiroNo;                 //navega at� o �ltimo n� para inserir o novo
+        No *q = primeiroNo;                 //navega ate o ultimo no para inserir o novo
         while(q->getProxNo() != NULL)
             q = q->getProxNo();
 
         q->setProxNo(p);
     }else{
-        primeiroNo = p;                     //insere como primeiro no caso de o grafo n�o ter n�s
+        primeiroNo = p;                     //insere como primeiro no caso de o grafo nao ter nos
     }
 }
 
 void Grafo::insereArestaGrafo(int idOrigem, int idDestino, int pesoAresta){
 
-    //verifica se os n�s necess�rios existem
+    //verifica se os nos necess�rios existem
     if(!verificaExistenciaNo(idOrigem)){
         insereNo(idOrigem);
     }
@@ -88,12 +85,3 @@ bool Grafo::verificaExistenciaNo(int id){
     }
     return false;                   //false se o n� n�o existir no grafo
 }
-
-
-
-
-
-
-
-
-
