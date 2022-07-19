@@ -1,5 +1,6 @@
 #include "No.h"
 #include <iostream>
+#include <vector>
 
 using namespace std;
 

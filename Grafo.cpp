@@ -68,7 +68,7 @@ void Grafo::insereArestaGrafo(int idOrigem, int idDestino, int pesoAresta){
             p->insereArestaNo(idDestino, pesoAresta);           //insere a aresta como destino do n� de origem
         }
 
-        if(getGrafoDirecionado() == 0){                         //se o grafo n�o for direcionado, insere a aresta no sentido oposto
+        if(!getGrafoDirecionado()){                         //se o grafo n�o for direcionado, insere a aresta no sentido oposto
             if(p->getIdNo() == idDestino){
                 p->insereArestaNo(idOrigem, pesoAresta);
             }
@@ -78,10 +78,20 @@ void Grafo::insereArestaGrafo(int idOrigem, int idDestino, int pesoAresta){
 
 bool Grafo::verificaExistenciaNo(int id){
 
+
     for(No *p = primeiroNo; p != NULL; p = p->getProxNo()){
         if(p->getIdNo() == id){
             return true;            //true se encontrar o n� no grafo
         }
     }
     return false;                   //false se o n� n�o existir no grafo
+}
+
+No Grafo::getNo(int id){
+
+    for(No *p = primeiroNo; p != NULL; p = p->getProxNo()){
+        if(p->getIdNo() == id){
+            return *p;
+        }
+    }
 }

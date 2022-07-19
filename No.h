@@ -18,6 +18,7 @@ public:
     void insereArestaNo(int destino, int peso);
     void imprimeArestas();
     Aresta* getPrimeiraAresta(){return primeiraAresta;};
+    int* getVetorDestinoArestas();
 
 private:
     int idNo;

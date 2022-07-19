@@ -23,6 +23,8 @@ public:
     int getPesoArestas(){return pesoArestas;};
     int getPesoNos(){return pesoNos;};
 
+    No getNo(int id);
+
 private:
     int grafoDirecionado;
     int pesoArestas;
