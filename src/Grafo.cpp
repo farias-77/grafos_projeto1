@@ -1,5 +1,3 @@
-#include <iostream>
-#include <string>
 #include "Grafo.h"
 
 Grafo::Grafo(){
@@ -68,7 +66,7 @@ void Grafo::insereArestaGrafo(int idOrigem, int idDestino, int pesoAresta){
             p->insereArestaNo(idDestino, pesoAresta);           //insere a aresta como destino do n� de origem
         }
 
-        if(getGrafoDirecionado() == 0){                         //se o grafo n�o for direcionado, insere a aresta no sentido oposto
+        if(!getGrafoDirecionado()){                         //se o grafo n�o for direcionado, insere a aresta no sentido oposto
             if(p->getIdNo() == idDestino){
                 p->insereArestaNo(idOrigem, pesoAresta);
             }
@@ -78,6 +76,7 @@ void Grafo::insereArestaGrafo(int idOrigem, int idDestino, int pesoAresta){
 
 bool Grafo::verificaExistenciaNo(int id){
 
+
     for(No *p = primeiroNo; p != NULL; p = p->getProxNo()){
         if(p->getIdNo() == id){
             return true;            //true se encontrar o n� no grafo
@@ -85,3 +84,60 @@ bool Grafo::verificaExistenciaNo(int id){
     }
     return false;                   //false se o n� n�o existir no grafo
 }
+
+No* Grafo::getNo(int id){
+
+    for(No *p = primeiroNo; p != NULL; p = p->getProxNo()){
+        if(p->getIdNo() == id){
+            return p;
+        }
+    }
+    return NULL;
+}
+
+float Grafo::itemC_coefAgrupLocal(int id){
+
+    float Pv = 0;
+    float grauNo = 0;
+    
+    No* p = this->getNo(id);
+
+    for(Aresta *a = p->getPrimeiraAresta(); a != NULL; a = a->getProxAresta()){
+
+        No* n = this->getNo(a->getDestinoAresta());
+        
+        for(Aresta *b = p->getPrimeiraAresta(); b != NULL; b = b->getProxAresta()){
+            
+            No* m = this->getNo(b->getDestinoAresta());
+            
+            if(n != m){
+
+                for(Aresta *c = n->getPrimeiraAresta(); c != NULL; c = c->getProxAresta()){
+                    
+                    if(c->getDestinoAresta() == m->getIdNo()){
+                        Pv++;
+                    }
+                }
+            }  
+        }
+    
+        grauNo++;
+    }
+
+    if(!grafoDirecionado){
+        Pv = Pv/2;
+    }
+    return grauNo/Pv;
+}
+
+std::vector<int> Grafo::itemA_fechoTransitivoDireto(int id){
+
+
+
+}
+
+// fecho transitivo direto --> busca em profundidade (todos que o nó pode alcançar)
+// fecho transitivo indireto --> floy
+// coef agrupamento local --> [feito]
+// coef agrupamento médio do grafo --> somar todos e dividir pelo num de vertices
+// dijkstra --> pegar pronto

@@ -37,10 +37,10 @@ int main(int argc, char ** argv)
         }
 
         //insercao arestas
-        posicaoInfoAresta = 0;  //inicia a gravacao no array pelo idOrigem
         infoAresta[0] = "";     //inicia leitura da linha com os campos vazios
         infoAresta[1] = "";
         infoAresta[2] = "";
+        posicaoInfoAresta = 0;  //inicia a gravacao no array pelo idOrigem
 
         //itera por todas as posicoes da string
         int tam = line.length();
@@ -62,7 +62,8 @@ int main(int argc, char ** argv)
 
     }
 
-    g1.imprimeGrafo();
+    //g1.imprimeGrafo();
+    std::cout << g1.itemC_coefAgrupLocal(3) << std::endl;
 
     return 0;
 }
