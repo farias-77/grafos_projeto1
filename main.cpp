@@ -63,9 +63,35 @@ int main(int argc, char ** argv)
 
     }
 
-    //g1.imprimeGrafo();
-    g1.itemA_fechoTransitivoDireto(0);
+    
+    //item A
+    std::vector<int> resultadoItemA = g1.itemA_fechoTransitivoDireto(0);
+    if(resultadoItemA.size() > 0){
+        std::cout << "a) [ " << resultadoItemA[0];
+        for(int i = 1; i < resultadoItemA.size(); i++){
+            std::cout << ", " << resultadoItemA[i]; 
+        }
+        std::cout << " ]" << std::endl;
+    }else{
+        std::cout << "a) [ ]" << std::endl;
+    }
+
+    //item B
+    std::vector<int> resultadoItemB = g1.itemB_fechoTransitivoIndireto(0);
+    if(resultadoItemB.size() > 0){
+        std::cout << "b) [ " << resultadoItemB[0];
+        for(int i = 1; i < resultadoItemB.size(); i++){
+            std::cout << ", " << resultadoItemB[i]; 
+        }
+        std::cout << " ]" << std::endl;
+    }else{
+        std::cout << "a) [ ]" << std::endl;
+    }
+    
+    //item C
     std::cout << "c)" << g1.itemC_coefAgrupLocal(0) << std::endl;
+
+    //item D
     std::cout << "d)" << g1.itemD_coefAgrupMedio() << std::endl;
 
     return 0;

@@ -28,9 +28,10 @@ public:
     No* getNo(int id);
 
     std::vector<int> itemA_fechoTransitivoDireto(int id);
-    void caminhamentoEmProfundidade(int id, std::vector<int>&visitados);
+    std::vector<int> itemB_fechoTransitivoIndireto(int id);
     float itemC_coefAgrupLocal(int id);
     float itemD_coefAgrupMedio();
+    void caminhamentoEmProfundidade(int id, std::vector<int>&visitados);
 
 private:
     int grafoDirecionado;

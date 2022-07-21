@@ -169,13 +169,26 @@ std::vector<int> Grafo::itemA_fechoTransitivoDireto(int id){
     caminhamentoEmProfundidade(id, visitados);
     visitados.erase(visitados.begin());
 
-    std::cout << "a) [ " << visitados[0];
-    for(int i = 1; i < visitados.size(); i++){
-        std::cout << ", " << visitados[i]; 
-    }
-    std::cout << " ]" << std::endl;
-
     return visitados;
+}
+
+std::vector<int> Grafo::itemB_fechoTransitivoIndireto(int id){
+    
+    std::vector<int>resultado ={};
+    
+    if(!grafoDirecionado){
+        return resultado;
+    }
+
+    for(No *p = primeiroNo; p != NULL; p = p->getProxNo()){
+        std::vector<int>fechoTransitivoDiretoNoP = itemA_fechoTransitivoDireto(p->getIdNo());
+
+        if(std::find(fechoTransitivoDiretoNoP.begin(), fechoTransitivoDiretoNoP.end(), id) != fechoTransitivoDiretoNoP.end()){
+            resultado.push_back(p->getIdNo());
+        }
+    }
+
+    return resultado;
 }
 
 void Grafo::caminhamentoEmProfundidade(int id, std::vector<int>&visitados){
@@ -193,7 +206,9 @@ void Grafo::caminhamentoEmProfundidade(int id, std::vector<int>&visitados){
     }
 }
 
-// a) fecho transitivo direto --> busca em profundidade (todos que o nó pode alcançar)
+
+
+// a) [FEITO] fecho transitivo direto
 // b) fecho transitivo indireto --> floyd
 // c) [FEITO] coef agrupamento local
 // d) [FEITO] coef agrupamento médio do grafo
