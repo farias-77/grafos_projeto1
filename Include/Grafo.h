@@ -25,7 +25,7 @@ public:
 
     No* getNo(int id);
 
-    int itemC_coefAgrupLocal(int id);
+    float itemC_coefAgrupLocal(int id);
 
 private:
     int grafoDirecionado;

@@ -97,25 +97,28 @@ No* Grafo::getNo(int id){
     return NULL;
 }
 
-int Grafo::itemC_coefAgrupLocal(int id){
+float Grafo::itemC_coefAgrupLocal(int id){
 
-    int Pv = 0;
-    int grauNo = 0;
+    float Pv = 0;
+    float grauNo = 0;
     
     No* p = this->getNo(id);
 
     for(Aresta *a = p->getPrimeiraAresta(); a != NULL; a = a->getProxAresta()){
 
         No* n = this->getNo(a->getDestinoAresta());
-
+        std::cout << "n" << n->getIdNo() << std::endl;
+        
         for(Aresta *b = p->getPrimeiraAresta(); b != NULL; b = b->getProxAresta()){
             
             No* m = this->getNo(b->getDestinoAresta());
-
+            std::cout << "m" << m->getIdNo() << std::endl;
+            
             if(n != m){
 
                 for(Aresta *c = n->getPrimeiraAresta(); c != NULL; c = c->getProxAresta()){
                     
+                    std::cout << c->getDestinoAresta() << std::endl;
                     if(c->getDestinoAresta() == m->getIdNo()){
                         Pv++;
                     }
@@ -126,9 +129,12 @@ int Grafo::itemC_coefAgrupLocal(int id){
         grauNo++;
     }
 
-    if(grafoDirecionado){
+    if(!grafoDirecionado){
         Pv = Pv/2;
     }
+
+    std::cout << "PV" << Pv << std::endl;
+    std::cout << "grauNo" << grauNo << std::endl;
 
     return grauNo/Pv;
 }
