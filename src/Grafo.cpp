@@ -158,11 +158,43 @@ float Grafo::itemD_coefAgrupMedio(){
 }
 
 std::vector<int> Grafo::itemA_fechoTransitivoDireto(int id){
-    return {};
+    std::vector<int>visitados ={};
+    
+    if(!grafoDirecionado){
+        return visitados;
+    }
+
+    No* p = this->getNo(id); 
+
+    caminhamentoEmProfundidade(id, visitados);
+    visitados.erase(visitados.begin());
+
+    std::cout << "a) [ " << visitados[0];
+    for(int i = 1; i < visitados.size(); i++){
+        std::cout << ", " << visitados[i]; 
+    }
+    std::cout << " ]" << std::endl;
+
+    return visitados;
+}
+
+void Grafo::caminhamentoEmProfundidade(int id, std::vector<int>&visitados){
+
+    No* p = this->getNo(id);
+
+    visitados.push_back(id);
+    
+    for(Aresta *a = p->getPrimeiraAresta(); a != NULL; a = a->getProxAresta()){
+
+        No* n = this->getNo(a->getDestinoAresta());
+        if(std::find(visitados.begin(), visitados.end(), n->getIdNo()) == visitados.end()){
+            caminhamentoEmProfundidade(n->getIdNo(), visitados);
+        }
+    }
 }
 
 // a) fecho transitivo direto --> busca em profundidade (todos que o nó pode alcançar)
-// b) fecho transitivo indireto --> floy
+// b) fecho transitivo indireto --> floyd
 // c) [FEITO] coef agrupamento local
 // d) [FEITO] coef agrupamento médio do grafo
 // e) dijkstra --> pegar pronto

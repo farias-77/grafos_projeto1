@@ -64,6 +64,7 @@ int main(int argc, char ** argv)
     }
 
     //g1.imprimeGrafo();
+    g1.itemA_fechoTransitivoDireto(0);
     std::cout << "c)" << g1.itemC_coefAgrupLocal(0) << std::endl;
     std::cout << "d)" << g1.itemD_coefAgrupMedio() << std::endl;
 

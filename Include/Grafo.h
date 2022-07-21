@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <algorithm>
 
 class Grafo{
 
@@ -27,6 +28,7 @@ public:
     No* getNo(int id);
 
     std::vector<int> itemA_fechoTransitivoDireto(int id);
+    void caminhamentoEmProfundidade(int id, std::vector<int>&visitados);
     float itemC_coefAgrupLocal(int id);
     float itemD_coefAgrupMedio();
 
