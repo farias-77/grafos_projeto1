@@ -97,10 +97,13 @@ No* Grafo::getNo(int id){
     return NULL;
 }
 
-int Grafo::itemC_coefAgrupLocal(No *p){
+int Grafo::itemC_coefAgrupLocal(int id){
 
     int Pv = 0;
+    int grauNo = 0;
     
+    No* p = this->getNo(id);
+
     for(Aresta *a = p->getPrimeiraAresta(); a != NULL; a = a->getProxAresta()){
 
         No* n = this->getNo(a->getDestinoAresta());
@@ -119,11 +122,19 @@ int Grafo::itemC_coefAgrupLocal(No *p){
                 }
             }  
         }
+    
+        grauNo++;
     }
+
+    if(grafoDirecionado){
+        Pv = Pv/2;
+    }
+
+    return grauNo/Pv;
 }
 
 //fecho transitivo direto
 //fecho transitivo indireto
-//coef agrupamento local
+//coef agrupamento local [X]
 //coef agrupamento médio do grafo
 // dijkstra
