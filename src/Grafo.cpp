@@ -275,9 +275,3 @@ void Grafo::caminhamentoEmProfundidade(int id, std::vector<int>&visitados){
         }
     }
 }
-
-// a) [FEITO] fecho transitivo direto
-// b) [FEITO] fecho transitivo indireto
-// c) [FEITO] coef agrupamento local
-// d) [FEITO] coef agrupamento médio do grafo
-// e) dijkstra --> se vira
