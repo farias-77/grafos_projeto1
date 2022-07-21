@@ -31,6 +31,7 @@ public:
     std::vector<int> itemB_fechoTransitivoIndireto(int id);
     float itemC_coefAgrupLocal(int id);
     float itemD_coefAgrupMedio();
+    int itemE_caminhoMinimoDijkstra(int idVertice1, int idVertice2);
     void caminhamentoEmProfundidade(int id, std::vector<int>&visitados);
 
 private:

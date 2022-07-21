@@ -1,4 +1,5 @@
 #include "Grafo.h"
+#include <vector>
 
 Grafo::Grafo(){
     primeiroNo = NULL;
@@ -95,6 +96,40 @@ No* Grafo::getNo(int id){
     return NULL;
 }
 
+std::vector<int> Grafo::itemA_fechoTransitivoDireto(int id){
+    std::vector<int>visitados ={};
+    
+    if(!grafoDirecionado){
+        return visitados;
+    }
+
+    No* p = this->getNo(id); 
+
+    caminhamentoEmProfundidade(id, visitados);
+    visitados.erase(visitados.begin());
+
+    return visitados;
+}
+
+std::vector<int> Grafo::itemB_fechoTransitivoIndireto(int id){
+    
+    std::vector<int>resultado ={};
+    
+    if(!grafoDirecionado){
+        return resultado;
+    }
+
+    for(No *p = primeiroNo; p != NULL; p = p->getProxNo()){
+        std::vector<int>fechoTransitivoDiretoNoP = itemA_fechoTransitivoDireto(p->getIdNo());
+
+        if(std::find(fechoTransitivoDiretoNoP.begin(), fechoTransitivoDiretoNoP.end(), id) != fechoTransitivoDiretoNoP.end()){
+            resultado.push_back(p->getIdNo());
+        }
+    }
+
+    return resultado;
+}
+
 float Grafo::itemC_coefAgrupLocal(int id){
 
     // inicializa componentes da equação
@@ -157,39 +192,74 @@ float Grafo::itemD_coefAgrupMedio(){
     return (somaCoefAgrupLocais/numNos);
 }
 
-std::vector<int> Grafo::itemA_fechoTransitivoDireto(int id){
-    std::vector<int>visitados ={};
+int Grafo::itemE_caminhoMinimoDijkstra(int origem, int destino){
     
-    if(!grafoDirecionado){
-        return visitados;
+    if(origem > destino){
+        int aux = origem;
+        origem = destino;
+        destino = aux;
+    }
+    
+    int intInfinite = 2147483647;
+
+    int numNos = 0;
+    std::vector<int> Sbarra = {};
+    std::vector<int> S = {origem};
+    std::vector<int> custos = {};
+    No* p = this->getNo(origem);
+
+    //conta Nós do grafo
+    for(No* n = primeiroNo; n != NULL; n = n->getProxNo()){
+        numNos++;
     }
 
-    No* p = this->getNo(id); 
-
-    caminhamentoEmProfundidade(id, visitados);
-    visitados.erase(visitados.begin());
-
-    return visitados;
-}
-
-std::vector<int> Grafo::itemB_fechoTransitivoIndireto(int id){
-    
-    std::vector<int>resultado ={};
-    
-    if(!grafoDirecionado){
-        return resultado;
-    }
-
-    for(No *p = primeiroNo; p != NULL; p = p->getProxNo()){
-        std::vector<int>fechoTransitivoDiretoNoP = itemA_fechoTransitivoDireto(p->getIdNo());
-
-        if(std::find(fechoTransitivoDiretoNoP.begin(), fechoTransitivoDiretoNoP.end(), id) != fechoTransitivoDiretoNoP.end()){
-            resultado.push_back(p->getIdNo());
+    //inicializa custos com infinito da linguagem (exceção para o nó de origem) e vetor com nós fora da solução final
+    for(int i = 0; i < numNos; i++){
+        if(i == origem){
+            custos.push_back(0);
+        }else{
+            custos.push_back(intInfinite);
+            Sbarra.push_back(i);
         }
     }
 
-    return resultado;
+    //ajusta custos para os adjacentes
+    for(Aresta *a = p->getPrimeiraAresta(); a != NULL; a = a-> getProxAresta()){
+        custos[a->getDestinoAresta()] = a->getPesoAresta();
+    }
+
+    while(Sbarra.size() != 0){
+
+        int idSbarraMenorCusto = Sbarra[0];
+        for(int i = 0; i < Sbarra.size(); i++){
+            if(custos[Sbarra[i]] < custos[idSbarraMenorCusto]){
+                idSbarraMenorCusto = Sbarra[i];
+            }
+        }
+
+        int posicaoSbarraMenorCusto;
+        for(int i = 0; i < Sbarra.size(); i++){
+            if(Sbarra[i] == idSbarraMenorCusto){
+                posicaoSbarraMenorCusto = i;
+            }
+        }
+
+        std::vector<int>::iterator it = Sbarra.begin() + posicaoSbarraMenorCusto;
+        S.push_back(Sbarra[posicaoSbarraMenorCusto]);
+        No* adicionadoSolucao = this->getNo(Sbarra[posicaoSbarraMenorCusto]);
+        Sbarra.erase(it);
+
+        for(Aresta *b = adicionadoSolucao->getPrimeiraAresta(); b != NULL; b = b->getProxAresta()){
+
+            if(custos[adicionadoSolucao->getIdNo()] + b->getPesoAresta() < custos[b->getDestinoAresta()]){
+                custos[b->getDestinoAresta()] = custos[adicionadoSolucao->getIdNo()] + b->getPesoAresta();
+            }
+        }
+    }
+
+    return custos[destino];
 }
+
 
 void Grafo::caminhamentoEmProfundidade(int id, std::vector<int>&visitados){
 
@@ -206,10 +276,8 @@ void Grafo::caminhamentoEmProfundidade(int id, std::vector<int>&visitados){
     }
 }
 
-
-
 // a) [FEITO] fecho transitivo direto
-// b) fecho transitivo indireto --> floyd
+// b) [FEITO] fecho transitivo indireto
 // c) [FEITO] coef agrupamento local
 // d) [FEITO] coef agrupamento médio do grafo
-// e) dijkstra --> pegar pronto
+// e) dijkstra --> se vira

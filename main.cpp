@@ -28,7 +28,6 @@ int main(int argc, char ** argv)
 
         //insercao nos
         //na primeira execucao do loop captura a ordem do grafo e cria os nos necessarios
-        
         if(aux){
             for(int i = 0; i < std::stoi(line); i++){
                 g1.insereNo(i);
@@ -64,6 +63,9 @@ int main(int argc, char ** argv)
     }
 
     
+
+    //Resultados dos itens
+
     //item A
     std::vector<int> resultadoItemA = g1.itemA_fechoTransitivoDireto(0);
     if(resultadoItemA.size() > 0){
@@ -85,14 +87,17 @@ int main(int argc, char ** argv)
         }
         std::cout << " ]" << std::endl;
     }else{
-        std::cout << "a) [ ]" << std::endl;
+        std::cout << "b) [ ]" << std::endl;
     }
     
     //item C
-    std::cout << "c)" << g1.itemC_coefAgrupLocal(0) << std::endl;
+    std::cout << "c) " << g1.itemC_coefAgrupLocal(0) << std::endl;
 
     //item D
-    std::cout << "d)" << g1.itemD_coefAgrupMedio() << std::endl;
+    std::cout << "d) " << g1.itemD_coefAgrupMedio() << std::endl;
+
+    //item E
+    std::cout << "e) " << g1.itemE_caminhoMinimoDijkstra(6, 4) << std::endl;
 
     return 0;
 }
