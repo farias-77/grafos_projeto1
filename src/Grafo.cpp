@@ -97,21 +97,29 @@ No* Grafo::getNo(int id){
 
 float Grafo::itemC_coefAgrupLocal(int id){
 
-    float Pv = 0;
+    // inicializa componentes da equação
+    float Pv = 0;                       //pares de vértices adjacentes ao nó analisado com aresta entre si
     float grauNo = 0;
     
+    //reconhece nó analisado
     No* p = this->getNo(id);
 
+    //passa por todas as arestas do nó analisado
     for(Aresta *a = p->getPrimeiraAresta(); a != NULL; a = a->getProxAresta()){
 
+        //reconhece destino de cada aresta
         No* n = this->getNo(a->getDestinoAresta());
         
+        //passa por todas as arestas do nó analisado para comparar
         for(Aresta *b = p->getPrimeiraAresta(); b != NULL; b = b->getProxAresta()){
             
+            //reconhece destino de cada aresta do segundo loop
             No* m = this->getNo(b->getDestinoAresta());
             
+            //evita comparação de nós iguais
             if(n != m){
 
+                //verifica se existe aresta entre dois nós adjacentes ao nó analisado 
                 for(Aresta *c = n->getPrimeiraAresta(); c != NULL; c = c->getProxAresta()){
                     
                     if(c->getDestinoAresta() == m->getIdNo()){
@@ -120,24 +128,41 @@ float Grafo::itemC_coefAgrupLocal(int id){
                 }
             }  
         }
-    
+
         grauNo++;
     }
 
     if(!grafoDirecionado){
         Pv = Pv/2;
     }
+
+    if(Pv == 0){
+        return 0;
+    }
+
     return grauNo/Pv;
 }
 
-std::vector<int> Grafo::itemA_fechoTransitivoDireto(int id){
+float Grafo::itemD_coefAgrupMedio(){
 
+    float somaCoefAgrupLocais = 0;
+    float numNos = 0;
 
+    //soma todos os coeficientes de agrupamento dos nós do grafo e divide pelo número de nós 
+    for(No* p= primeiroNo; p != NULL; p = p->getProxNo()){
+        somaCoefAgrupLocais += itemC_coefAgrupLocal(p->getIdNo());
+        numNos++;
+    }
 
+    return (somaCoefAgrupLocais/numNos);
 }
 
-// fecho transitivo direto --> busca em profundidade (todos que o nó pode alcançar)
-// fecho transitivo indireto --> floy
-// coef agrupamento local --> [feito]
-// coef agrupamento médio do grafo --> somar todos e dividir pelo num de vertices
-// dijkstra --> pegar pronto
+std::vector<int> Grafo::itemA_fechoTransitivoDireto(int id){
+    return {};
+}
+
+// a) fecho transitivo direto --> busca em profundidade (todos que o nó pode alcançar)
+// b) fecho transitivo indireto --> floy
+// c) [FEITO] coef agrupamento local
+// d) [FEITO] coef agrupamento médio do grafo
+// e) dijkstra --> pegar pronto

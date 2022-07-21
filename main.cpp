@@ -28,6 +28,7 @@ int main(int argc, char ** argv)
 
         //insercao nos
         //na primeira execucao do loop captura a ordem do grafo e cria os nos necessarios
+        
         if(aux){
             for(int i = 0; i < std::stoi(line); i++){
                 g1.insereNo(i);
@@ -63,7 +64,8 @@ int main(int argc, char ** argv)
     }
 
     //g1.imprimeGrafo();
-    std::cout << g1.itemC_coefAgrupLocal(3) << std::endl;
+    std::cout << "c)" << g1.itemC_coefAgrupLocal(0) << std::endl;
+    std::cout << "d)" << g1.itemD_coefAgrupMedio() << std::endl;
 
     return 0;
 }

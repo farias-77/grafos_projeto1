@@ -28,6 +28,7 @@ public:
 
     std::vector<int> itemA_fechoTransitivoDireto(int id);
     float itemC_coefAgrupLocal(int id);
+    float itemD_coefAgrupMedio();
 
 private:
     int grafoDirecionado;
