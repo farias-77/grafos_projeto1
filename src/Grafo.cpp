@@ -87,11 +87,43 @@ bool Grafo::verificaExistenciaNo(int id){
     return false;                   //false se o n� n�o existir no grafo
 }
 
-No Grafo::getNo(int id){
+No* Grafo::getNo(int id){
 
     for(No *p = primeiroNo; p != NULL; p = p->getProxNo()){
         if(p->getIdNo() == id){
-            return *p;
+            return p;
+        }
+    }
+    return NULL;
+}
+
+int Grafo::itemC_coefAgrupLocal(No *p){
+
+    int Pv = 0;
+    
+    for(Aresta *a = p->getPrimeiraAresta(); a != NULL; a = a->getProxAresta()){
+
+        No* n = this->getNo(a->getDestinoAresta());
+
+        for(Aresta *b = p->getPrimeiraAresta(); b != NULL; b = b->getProxAresta()){
+            
+            No* m = this->getNo(b->getDestinoAresta());
+
+            if(n != m){
+
+                for(Aresta *c = n->getPrimeiraAresta(); c != NULL; c = c->getProxAresta()){
+                    
+                    if(c->getDestinoAresta() == m->getIdNo()){
+                        Pv++;
+                    }
+                }
+            }  
         }
     }
 }
+
+//fecho transitivo direto
+//fecho transitivo indireto
+//coef agrupamento local
+//coef agrupamento médio do grafo
+// dijkstra
