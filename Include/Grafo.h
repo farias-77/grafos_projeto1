@@ -3,6 +3,7 @@
 #include "No.h"
 #include <iostream>
 #include <string>
+#include <vector>
 
 class Grafo{
 
@@ -25,6 +26,7 @@ public:
 
     No* getNo(int id);
 
+    std::vector<int> itemA_fechoTransitivoDireto(int id);
     float itemC_coefAgrupLocal(int id);
 
 private:

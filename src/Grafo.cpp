@@ -1,5 +1,3 @@
-#include <iostream>
-#include <string>
 #include "Grafo.h"
 
 Grafo::Grafo(){
@@ -107,18 +105,15 @@ float Grafo::itemC_coefAgrupLocal(int id){
     for(Aresta *a = p->getPrimeiraAresta(); a != NULL; a = a->getProxAresta()){
 
         No* n = this->getNo(a->getDestinoAresta());
-        std::cout << "n" << n->getIdNo() << std::endl;
         
         for(Aresta *b = p->getPrimeiraAresta(); b != NULL; b = b->getProxAresta()){
             
             No* m = this->getNo(b->getDestinoAresta());
-            std::cout << "m" << m->getIdNo() << std::endl;
             
             if(n != m){
 
                 for(Aresta *c = n->getPrimeiraAresta(); c != NULL; c = c->getProxAresta()){
                     
-                    std::cout << c->getDestinoAresta() << std::endl;
                     if(c->getDestinoAresta() == m->getIdNo()){
                         Pv++;
                     }
@@ -132,15 +127,17 @@ float Grafo::itemC_coefAgrupLocal(int id){
     if(!grafoDirecionado){
         Pv = Pv/2;
     }
-
-    std::cout << "PV" << Pv << std::endl;
-    std::cout << "grauNo" << grauNo << std::endl;
-
     return grauNo/Pv;
 }
 
-//fecho transitivo direto
-//fecho transitivo indireto
-//coef agrupamento local [X]
-//coef agrupamento médio do grafo
-// dijkstra
+std::vector<int> Grafo::itemA_fechoTransitivoDireto(int id){
+
+
+
+}
+
+// fecho transitivo direto --> busca em profundidade (todos que o nó pode alcançar)
+// fecho transitivo indireto --> floy
+// coef agrupamento local --> [feito]
+// coef agrupamento médio do grafo --> somar todos e dividir pelo num de vertices
+// dijkstra --> pegar pronto

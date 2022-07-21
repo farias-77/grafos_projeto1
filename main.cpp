@@ -63,7 +63,7 @@ int main(int argc, char ** argv)
     }
 
     //g1.imprimeGrafo();
-    std::cout << g1.itemC_coefAgrupLocal(1) << std::endl;
+    std::cout << g1.itemC_coefAgrupLocal(3) << std::endl;
 
     return 0;
 }
