@@ -67,8 +67,8 @@ int main(int argc, char ** argv)
     }
 
 
-
     //Coleta parâmetros para executar os itens
+    int numNosGrafo = g1.getNumNos();
     int idNoItemA = -1;
     int idNoItemB = -1;
     if(g1.getGrafoDirecionado() == 1){ 
@@ -188,7 +188,14 @@ int main(int argc, char ** argv)
         std::cout << "\td) Coeficiente de agrupamento médio do grafo: " << g1.itemD_coefAgrupMedio() << std::endl << std::endl;
 
         // e)
-        std::cout << "\te) Custo do caminho mínimo entre os nós " << idOrigemItemE << " e " << idDestinoItemE << " usando o algoritmo de Dijkstra: " << g1.itemE_caminhoMinimoDijkstra(idOrigemItemE, idDestinoItemE) << std::endl;
+        int intInfinite = 2147483647;
+        std::vector<int> caminhoMinimo = g1.itemE_caminhoMinimoDijkstra(idOrigemItemE, idDestinoItemE);
+        std::cout << "\te) Custo do caminho mínimo entre os nós " << idOrigemItemE << " e " << idDestinoItemE << " usando o algoritmo de Dijkstra: ";
+        if(caminhoMinimo[caminhoMinimo.size() - 1] == intInfinite || caminhoMinimo[caminhoMinimo.size() - 1] < 0){
+            std::cout << "Não existe um caminho entre os nós " << idOrigemItemE << " e " << idDestinoItemE << " neste grafo.";
+        }else{
+            std::cout << caminhoMinimo[caminhoMinimo.size() - 1];
+        }
 
 
         std::cout << std::endl << std::endl;

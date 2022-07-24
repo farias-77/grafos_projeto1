@@ -202,8 +202,10 @@ float Grafo::itemD_coefAgrupMedio(){
     return (somaCoefAgrupLocais/numNos);
 }
 
-int Grafo::itemE_caminhoMinimoDijkstra(int origem, int destino){
-        
+std::vector<int> Grafo::itemE_caminhoMinimoDijkstra(int origem, int destino){
+    //função calcula o caminho mínimo da origem para todos os outros nós do grafo, e no final retorna o caminho entre a origem e o destino
+
+
     int intInfinite = 2147483647;
 
     int numNos = this->getNumNos();
@@ -260,7 +262,19 @@ int Grafo::itemE_caminhoMinimoDijkstra(int origem, int destino){
         }
     }
 
-    return custos[destino];
+    //copia dados do vetor S para o vetor caminho final (pegando só os nós entre a origem e o destino)
+    std::vector<int> caminhoFinal = {};
+    for(int i = 0; i < S.size(); i++){
+        caminhoFinal.push_back(S[i]);
+        if(S[i] == destino){
+            break;
+        } 
+    }
+
+    //coloca o custo do caminho entre o destino e a origem na última posição do array
+    caminhoFinal.push_back(custos[destino]);
+
+    return caminhoFinal;
 }
 
 void Grafo::caminhamentoEmProfundidade(int id, std::vector<int>&visitados){
