@@ -97,14 +97,19 @@ No* Grafo::getNo(int id){
 }
 
 std::vector<int> Grafo::itemA_fechoTransitivoDireto(int id){
+    
+    //vetor para controlar nós visitados
     std::vector<int>visitados ={};
     
+    //retorna vazio se o grafo não for direcionado
     if(!grafoDirecionado){
         return visitados;
     }
 
+    //encontra o nó desejado
     No* p = this->getNo(id); 
 
+    //executa o caminhamento em profundidade para o nó desejado e exclui ele mesmo da lista final
     caminhamentoEmProfundidade(id, visitados);
     visitados.erase(visitados.begin());
 
@@ -113,15 +118,20 @@ std::vector<int> Grafo::itemA_fechoTransitivoDireto(int id){
 
 std::vector<int> Grafo::itemB_fechoTransitivoIndireto(int id){
     
+    //vetor que irá receber todos os nós que podem chegar ao nó desejado
     std::vector<int>resultado ={};
     
+    //retorna vazio se o grafo não for direcionado
     if(!grafoDirecionado){
         return resultado;
     }
 
     for(No *p = primeiroNo; p != NULL; p = p->getProxNo()){
+        
+        //executa o fecho transitivo direto para todos os nós
         std::vector<int>fechoTransitivoDiretoNoP = itemA_fechoTransitivoDireto(p->getIdNo());
 
+        //se o nó desejado estiver no fecho transitivo direto de um nó n, inclui o nó n no fecho transitivo indireto do nó desejado 
         if(std::find(fechoTransitivoDiretoNoP.begin(), fechoTransitivoDiretoNoP.end(), id) != fechoTransitivoDiretoNoP.end()){
             resultado.push_back(p->getIdNo());
         }
@@ -193,25 +203,14 @@ float Grafo::itemD_coefAgrupMedio(){
 }
 
 int Grafo::itemE_caminhoMinimoDijkstra(int origem, int destino){
-    
-    if(origem > destino){
-        int aux = origem;
-        origem = destino;
-        destino = aux;
-    }
-    
+        
     int intInfinite = 2147483647;
 
-    int numNos = 0;
-    std::vector<int> Sbarra = {};
-    std::vector<int> S = {origem};
-    std::vector<int> custos = {};
+    int numNos = this->getNumNos();
+    std::vector<int> Sbarra = {};       //vetor Sbarra contém os nós que ainda não estão na solução
+    std::vector<int> S = {origem};      //vetor S contém os nós que já estão na solução
+    std::vector<int> custos = {};       //vetor custos contém o custo do nó origem até o nó n
     No* p = this->getNo(origem);
-
-    //conta Nós do grafo
-    for(No* n = primeiroNo; n != NULL; n = n->getProxNo()){
-        numNos++;
-    }
 
     //inicializa custos com infinito da linguagem (exceção para o nó de origem) e vetor com nós fora da solução final
     for(int i = 0; i < numNos; i++){
@@ -230,6 +229,7 @@ int Grafo::itemE_caminhoMinimoDijkstra(int origem, int destino){
 
     while(Sbarra.size() != 0){
 
+        //inicia o nó de menor custo como o primeiro nó de Sbarra e compara com todos para obter o real menor custo
         int idSbarraMenorCusto = Sbarra[0];
         for(int i = 0; i < Sbarra.size(); i++){
             if(custos[Sbarra[i]] < custos[idSbarraMenorCusto]){
@@ -237,6 +237,7 @@ int Grafo::itemE_caminhoMinimoDijkstra(int origem, int destino){
             }
         }
 
+        //busca a posição do Sbarra de menor custo
         int posicaoSbarraMenorCusto;
         for(int i = 0; i < Sbarra.size(); i++){
             if(Sbarra[i] == idSbarraMenorCusto){
@@ -244,11 +245,13 @@ int Grafo::itemE_caminhoMinimoDijkstra(int origem, int destino){
             }
         }
 
+        //adiciona o nó de menor custo à solução final (vetor S) e deleta de Sbarra
         std::vector<int>::iterator it = Sbarra.begin() + posicaoSbarraMenorCusto;
         S.push_back(Sbarra[posicaoSbarraMenorCusto]);
         No* adicionadoSolucao = this->getNo(Sbarra[posicaoSbarraMenorCusto]);
         Sbarra.erase(it);
 
+        //atualiza os custos para o caso de ter um caminho mais barato para um nó passando pelo nó recém adicionado à S
         for(Aresta *b = adicionadoSolucao->getPrimeiraAresta(); b != NULL; b = b->getProxAresta()){
 
             if(custos[adicionadoSolucao->getIdNo()] + b->getPesoAresta() < custos[b->getDestinoAresta()]){
@@ -260,13 +263,13 @@ int Grafo::itemE_caminhoMinimoDijkstra(int origem, int destino){
     return custos[destino];
 }
 
-
 void Grafo::caminhamentoEmProfundidade(int id, std::vector<int>&visitados){
 
     No* p = this->getNo(id);
 
     visitados.push_back(id);
     
+    //avança enquanto for possível, quando não for mais possível, recua (utilizando recursividade)
     for(Aresta *a = p->getPrimeiraAresta(); a != NULL; a = a->getProxAresta()){
 
         No* n = this->getNo(a->getDestinoAresta());

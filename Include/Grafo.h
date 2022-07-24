@@ -20,10 +20,12 @@ public:
     void setGrafoDirecionado(int num){grafoDirecionado = num;};
     void setPesoArestas(int num){pesoArestas = num;};
     void setPesoNos(int num){pesoNos = num;};
+    void setNumNos(int num){numNos = num;};
 
     int getGrafoDirecionado(){return grafoDirecionado;};
     int getPesoArestas(){return pesoArestas;};
     int getPesoNos(){return pesoNos;};
+    int getNumNos(){return numNos;};
 
     No* getNo(int id);
 
@@ -38,6 +40,7 @@ private:
     int grafoDirecionado;
     int pesoArestas;
     int pesoNos;
+    int numNos;
     No* primeiroNo;
 };
 
