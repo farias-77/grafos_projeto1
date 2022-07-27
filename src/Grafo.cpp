@@ -185,7 +185,9 @@ float Grafo::itemC_coefAgrupLocal(int id){
         return 0;
     }
 
-    return grauNo/Pv;
+    float denominador = (grauNo * (grauNo - 1))/2;
+
+    return Pv/denominador;
 }
 
 float Grafo::itemD_coefAgrupMedio(){
